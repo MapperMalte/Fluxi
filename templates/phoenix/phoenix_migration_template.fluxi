@@ -1,0 +1,11 @@
+defmodule FinalLocallity.Repo.Migrations.Create#NAME do
+  use Ecto.Migration
+
+  def change do
+    create table(:#NAME_SNAKE_CASE) do
+#FIELDS_LIST_FOR_TABLE_CREATION
+      timestamps()
+    end
+
+  end
+end

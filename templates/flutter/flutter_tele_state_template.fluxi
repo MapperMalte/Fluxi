@@ -1,0 +1,48 @@
+import 'package:flutter/cupertino.dart';
+import 'package:locallity/model_refactored/connection_models/socket_instance.dart';
+import 'package:phoenix_socket/phoenix_socket.dart';
+
+typedef On#NAMEConnected(#NAMEModel fetchedOrCreatedModel);
+typedef On#NAMEUpdated(#NAMEModel updatedModel);
+
+class #NAMETeleFactory extends ChangeNotifier
+{
+  PhoenixChannel? _channel;
+  #NAMEModel syncedInstance;
+  String uuid;
+
+  #NAMETeleFactory(this.uuid);
+
+  void connect(On#NAMEConnected on#NAMEConnected) async {
+    FluxiSocketInstance.getInstance().enqueue((phoenixSocket) async {
+      _channel = phoenixSocket.addChannel(
+          topic: "model:"+uuid,
+          parameters: {}
+      );
+     _channel?.join().onReply("ok", (p0) async {
+       on#NAMEConnected(this);
+       _channel!.push("init", {
+                "uuid": uuid
+              }).onReply("ok", (p0) {
+                syncedInstance = p0.response['#nAME'];
+                notifyListeners();
+                await for (var message in _channel!.messages) {
+                     if (message.event == PhoenixChannelEvent.custom('model:updated') )
+                     {
+                        syncedInstance = #NAMEModel.fromMap(message.payload!['#nAME']);
+                        notifyListeners();
+                     }
+                }
+              });
+      });
+    });
+  }
+
+  void sync(#NAMEModel newInstance)
+  {
+    _channel!.push("sync", {
+                    "uuid": uuid,
+                    "#nAME": newInstance.toMap()
+                  });
+  }
+}

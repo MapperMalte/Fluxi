@@ -1,0 +1,21 @@
+defmodule #ELIXIR_ROOT.#NAME do
+  use Ecto.Schema
+  import Ecto.Changeset
+
+  @derive {Jason.Encoder, only: [
+#FIELDS_LIST_FOR_JASON_ENCODER
+  ]}
+  schema "#NAME_SNAKE_CASE" do
+
+#FIELDS_LIST_FOR_SCHEMA
+
+    timestamps()
+  end
+
+  @doc false
+  def changeset(story, attrs) do
+    story
+    |> cast(attrs, [#FIELDS_LIST_FOR_CHANGESET])
+    |> validate_required([#FIELDS_LIST_FOR_CHANGESET])
+  end
+end

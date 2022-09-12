@@ -1,0 +1,51 @@
+import 'package:phoenix_socket/phoenix_socket.dart';
+
+typedef OnSocketInstanceOpened(PhoenixSocket phoenixSocket);
+
+class FluxiSocketInstance
+{
+  static FluxiSocketInstance? _socketInstance;
+  bool connecting = false;
+  bool connected = false;
+  PhoenixSocket? phoenixSocket;
+  List<OnSocketInstanceOpened> awaitingClients = [];
+
+  static FluxiSocketInstance getInstance()
+  {
+    if ( _socketInstance == null )
+    {
+      _socketInstance = new SocketInstance();
+      _socketInstance!.connect();
+    }
+    return _socketInstance!;
+  }
+
+  void connect()
+  {
+    if ( connecting || connected ) return;
+    connecting = true;
+
+    phoenixSocket!.closeStream.listen((event) {
+      connected = false;
+    });
+
+    phoenixSocket!.openStream.listen((event) async {
+      connecting = false;
+      connected = true;
+      for(int i = 0; i < awaitingClients.length; i++)
+      {
+        awaitingClients[i](phoenixSocket!);
+      }
+    });
+  }
+
+  void enqueue(OnSocketInstanceOpened onSocketInstanceOpened)
+  {
+    if ( connected )
+    {
+      onSocketInstanceOpened(phoenixSocket!);
+    } else {
+      awaitingClients.add(onSocketInstanceOpened);
+    }
+  }
+}

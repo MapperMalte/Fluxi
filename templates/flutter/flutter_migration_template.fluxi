@@ -1,0 +1,15 @@
+class Database
+{
+    void execute(String s) {}
+}
+
+class #NAMEMigration
+{
+    void createDatabase(Database db)
+    {
+        db.execute("CREATE TABLE #NAME"
+#FLUTTER_MIGRATION_FIELDS_LIST
+            ")"
+        );
+    }
+}

@@ -1,0 +1,34 @@
+class #NAMERepo
+{
+  static Future<int> insert#NAME(Database database, #NAMEModel #nAMEModel) async
+  {
+    return await database.insert(#NAMEModel.TABLE_NAME, #nAMEModel.toMap());
+  }
+
+  static Future<bool> delete#NAMEByUUID(Database db, String uuid) async
+  {
+    return await db.delete(#NAMEModel.TABLE_NAME,
+        where: #NAMEModel.#nAME_uuid+ " = ?",
+        whereArgs: [uuid]);
+  }
+
+  static Future<bool> #nAMEExists(Database db, String uuid) async
+  {
+    return ((await db.query(
+                   #NAMEModel.TABLE_NAME,
+                   where: #NAMEModel.#nAME_uuid+ " = ? ",
+                   whereArgs: [uuid],
+                   limit: 1
+               )).length > 0);
+  }
+
+  static Future<#NAMEModel?> get#NAMEByUUID(Database db, String uuid) async
+  {
+    List<Map> queryResults = (await db.query(
+                   #NAMEModel.TABLE_NAME,
+                   where: #NAMEModel.#nAME_uuid+ " = ? ",
+                   whereArgs: [uuid],
+               ));
+    return #NAMEModel.fromMap(queryResults[0]);
+  }
+}

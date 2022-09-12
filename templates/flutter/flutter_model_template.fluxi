@@ -1,0 +1,19 @@
+class #NAMEModel
+{
+  static const String TABLE_NAME = '#NAME';
+
+#FLUTTER_CLASS_FIELDS_LIST
+
+  #NAMEModel.fromMap(Map<dynamic, dynamic> map)
+  {
+#FIELDS_LIST_FOR_MAP_CONSTRUCTOR
+  }
+
+  Map<String, Object?> toMap() {
+    return {
+#FIELDS_LIST_FOR_MAP_GENERATOR
+    };
+  }
+
+
+}

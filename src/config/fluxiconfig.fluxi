@@ -1,0 +1,16 @@
+PHOENIX_ROOT_PATH:
+FLUTTER_ROOT_PATH:
+NAME:
+
+TelepromptProject
+{
+    teleprompt_project_uuid:uuid
+    name:string
+    currently_selected_index:integer
+
+    prompts[]: Teleprompt{
+        teleprompt_uuid:uuid
+        content:string
+        index:integer
+    }
+}

@@ -1,0 +1,28 @@
+defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
+  use FinalLocallityWeb, :channel
+  alias FinalLocallity.#ELIXIR_ROOT.#NAME
+  alias FinalLocallity.#ELIXIR_ROOT.#NAMERepo
+
+  @impl true
+  def join("connect:uuid", %{
+    "#nAME_uuid" => #nAME_uuid
+  }, socket) do
+
+    {:ok, socket |> assign( :#nAME_uuid, #nAME_uuid) }
+  end
+
+  @impl true
+  def handle_in("init", payload, socket) do
+    #nAME = #NAMERepo.get_#nAME_by_uuid(#nAME_uuid)
+    {:reply, {:ok, %{
+      "#nAME" => #nAME
+    }}, socket}
+  end
+
+  @impl true
+  def handle_in("sync", payload, socket) do
+    broadcast socket, "model:updated", payload
+    {:noreply, socket}
+  end
+
+end

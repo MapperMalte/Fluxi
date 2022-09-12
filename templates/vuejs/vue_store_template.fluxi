@@ -1,0 +1,182 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import {Socket} from "phoenix-socket";
+import shifts_module from '../components/planning_refactored/store/shifts.js'
+
+Vue.use(Vuex);
+Vue.use(VueAxios, axios);
+
+export default new Vuex.Store({
+  state: {
+    // general 10.0.2.2
+    base_route: "http://localhost:4000/api",
+    login_route: "http://localhost:4000/login",
+    base_url: "http://localhost:4000/api",
+    // planning
+    // live
+    live_socket: null,
+    arbeitszeiten: [],
+    scans: [],
+    shift_assignment_channel: null,
+    users_with_generated_works: [],
+  },
+
+  getters : {
+    users_with_generated_works: state => {
+      return state.users_with_generated_works;
+    },
+    user_qualifications: state => {
+      return state.user_qualifications;
+    },
+    viewing_shift_aggregate: state => {
+      return state.viewing_shift_aggregate;
+    },
+    viewing_shifts: state => {
+      return state.viewing_shifts;
+    },
+    object_qualifications: state => {
+      return state.object_qualifications;
+    },
+    users: state => {
+      return state.users;
+    },
+    assignments: state => {
+      return state.assignments;
+    },
+    generatedWork: state => {
+      return state.generated_work;
+    },
+    snack: state => {
+      return state.snack;
+    },
+    customers: state => {
+      return state.customers;
+    },
+    places: state => {
+      return state.places;
+    },
+    roles: state => {
+      return state.roles;
+    },
+    contracts: state => {
+      return state.contracts;
+    },
+    qualifications: state => {
+      return state.qualifications;
+    },
+    orders: state => {
+      return state.orders;
+    },
+    order_requirements: state => {
+      return state.order_requirements;
+    },
+    tariffs: state => {
+      return state.tariffs;
+    },
+    getUserById: (state) => (id) => {
+      return state.users.find(user => user.id === id)
+    },
+    getContractById: (state) => (id) => {
+      return state.contracts.find(contract => contract.id === id)
+    },
+    getOrderRequirementById: (state) => (id) => {
+      return state.order_requirements.find(order_requirement => order_requirement.id === id)
+    },
+    getAssignmentByGeneratedWorkId: (state) => (id) => {
+      return state.assignments.find( assignment => assignment.generated_work_id === id )
+    },
+  },
+  mutations: {
+    SET_ACCESS_TOKEN: (state, newValue) => {
+      state.accessToken = newValue
+    },
+    ADD_CUSTOMER: ( state, newValue ) => {
+      state.customers.push(newValue);
+    },
+
+    ADD_TARIFF: ( state, newValue ) => {
+      state.tariffs.push(newValue);
+    },
+    ADD_PLACE: ( state, newValue ) => {
+      state.places.push(newValue);
+    },
+    ADD_CONTRACT: ( state, newValue ) => {
+      state.contracts.push(newValue);
+    },
+    ADD_QUALIFICATION: ( state, newValue ) => {
+      state.qualifications.push(newValue);
+    },
+    ADD_USER: ( state, newValue ) => {
+      state.users.push(newValue);
+    },
+    ADD_ROLE: ( state, newValue ) => {
+      state.roles.push(newValue);
+    },
+    ADD_ASSIGNMENT: ( state, newValue ) => {
+      state.assignments.push(newValue);
+    },
+    ADD_OBJECT_QUALIFICATION: ( state, newValue ) => {
+      state.object_qualifications.push(newValue);
+    },
+  },
+  actions: {
+    connectLiveSocket: ({commit,state}, newValue) => {
+      if ( (state.arbeitszeiten.length > 0) ) return;
+      let socket = new Socket("ws://localhost:4000/socket");
+      socket.connect();
+      // Join in the links channel
+      let channel = socket.channel("zeiterfassung:lobby", {});
+      channel.join()
+          .receive("ok", (resp)=> {
+            state.live_socket=socket;
+            console.log("CONNECTED");
+            console.log(resp);
+            console.log(JSON.stringify(resp));
+            channel.push("fetch",{});
+            state.arbeitszeiten = [];
+          })
+          .receive("error", resp => { console.log("NewLink Unable to join", resp) });
+      channel.on('receive_update', payload => {
+        state.arbeitszeiten.push(payload);
+        //this.links.push(payload.link)
+      });
+
+      let channel_scans = socket.channel("scans:lobby", {});
+      channel_scans.join()
+          .receive("ok", (resp)=> {
+            console.log("CONNECTED");
+            console.log(resp);
+            console.log(JSON.stringify(resp));
+            channel_scans.push("fetch",{});
+            state.scans = [];
+          })
+          .receive("error", resp => { console.log("NewLink Unable to join", resp) });
+      channel_scans.on('receive_scan', payload => {
+        state.scans.push(payload);
+        //this.links.push(payload.link)
+      });
+    },
+
+    loadUsersWithGeneratedWorks: ({commit,state}, newValue) => {
+      axios.get(state.append_token(state.base_route+"/planning/objectmatrix/users/"+newValue)).then((response) => {
+        state.users_with_generated_works = response.data;
+      });
+    },
+
+    loadOrders: ({commit,state}, newValue) => {
+      axios.get(state.append_token(state.base_route+"/orders/all/")).then((response) => state.orders = response.data);
+    },
+    set_token: ({commit,state}, newValue) => {
+      state.token = newValue.token;
+      state.scope = newValue.scopes;
+    },
+    loadContracts: ({commit,state}, newValue) => {
+      axios.get(state.append_token(state.base_route+"/contracts/all/")).then((response) => state.contracts = response.data);
+    },
+  },
+  modules: {
+    shifts_module: shifts_module
+  }
+})
