@@ -1,0 +1,2 @@
+vue create hello-world --preset <presetName>
+vue add vuetify

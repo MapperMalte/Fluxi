@@ -3,23 +3,23 @@ defmodule #ELIXIR_ROOT.#NAMERepo do
   alias #ELIXIR_ROOT.Repo
   alias #ELIXIR_ROOT.#NAME
 
-  def create_#NAME_SNAKE_CASE(attrs \\ %{}) do
+  def create_#nAME(attrs \\ %{}) do
     %#NAME{}
     |> #NAME.changeset(attrs)
     |> Repo.insert()
   end
 
-  def get_#NAME_SNAKE_CASE_by_uuid!(#nAME_uuid) do
+  def get_#nAME_by_uuid!(#nAME_uuid) do
     Repo.one(from u in #NAME, where: u.#nAME_uuid == ^#nAME_uuid)
   end
 
-  def update_#NAME_SNAKE_CASE(%#NAME{} = #NAME_SNAKE_CASE, attrs) do
-    #NAME_SNAKE_CASE
+  def update_#nAME(%#NAME{} = #nAME, attrs) do
+    #nAME
     |> #NAME.changeset(attrs)
     |> Repo.update()
   end
 
-  def delete_#NAME_SNAKE_CASE(%#NAME{} = #NAME_SNAKE_CASE) do
-    Repo.delete(#NAME_SNAKE_CASE)
+  def delete_#nAME(%#NAME{} = #nAME) do
+    Repo.delete(#nAME)
   end
 end

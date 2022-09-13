@@ -1,14 +1,13 @@
 package core;
 
 import annotations.InjectIntoParam;
+import misc.CaseTransformer;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.TreeMap;
 
 class FluxiReflection
 {
@@ -29,25 +28,6 @@ public class FluxiTemplateTransformer
         return System.getProperty("user.dir");
     }
 
-    static public String toSnakeCase(String in)
-    {
-        StringBuilder out = new StringBuilder();
-        for(int i = 0; i < in.length(); i++)
-        {
-            if (Character.isUpperCase(in.charAt(i)) )
-            {
-                out.append(Character.toLowerCase(in.charAt(i)));
-                if ( i > 0 )
-                {
-                    out.append("_");
-                }
-            } else {
-                out.append(in.charAt(i));
-            }
-        }
-        return out.toString();
-    }
-
     // Connect Annotation to method
     public static String transformTemplate(
     String templateName,
@@ -62,6 +42,7 @@ public class FluxiTemplateTransformer
                 fluxiBag.name.toLowerCase()+"/"+fluxiBag.name.toLowerCase()+ending);
         new File(getProjectFileRoot()+"/default_output/" + folder +"/"+
                 fluxiBag.name.toLowerCase()+"/").mkdirs();
+
         System.out.println("OUTPUT: "+output.getAbsolutePath());
         Annotation[] annotations = paramInjecter.getClass().getAnnotations();
         ArrayList<FluxiReflection> fluxiInjectors = new ArrayList<>();
@@ -84,9 +65,9 @@ public class FluxiTemplateTransformer
             while ( (line = bufferedReader.readLine() ) != null )
             {
                 outputline = line
-                            .replaceAll("#NAME_SNAKE_CASE",toSnakeCase(fluxiBag.name))
+                            .replaceAll("#NAME_SNAKE_CASE", CaseTransformer.toSnakeCase(fluxiBag.name))
                             .replaceAll("#NAME",fluxiBag.name)
-                            .replaceAll("#nAME",fluxiBag.name.toLowerCase())
+                            .replaceAll("#nAME", CaseTransformer.toSnakeCase(fluxiBag.name))
                             .replaceAll("#ELIXIR_ROOT",fluxiBag.elixir_root);
                 int hashtag_index = line.indexOf("#");
                 while ( hashtag_index != -1 )
@@ -112,6 +93,11 @@ public class FluxiTemplateTransformer
             bufferedWriter.flush();
             bufferedWriter.close();
             bufferedReader.close();
+
+            if ( ending.endsWith(".sh") )
+            {
+                output.setExecutable(true);
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

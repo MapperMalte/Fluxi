@@ -1,0 +1,11 @@
+#!/bin/bash
+flutter create #nAME_flutter
+cd #nAME_flutter
+flutter pub add phoenix_socket
+flutter pub add provider
+flutter pub add sqflite
+flutter pub get
+git init
+git add .
+git commit -m "Hello from fluxi"
+echo "$(tput setaf 2)Fluxi intialized flutter project for #nAME!$(tput sgr0)"

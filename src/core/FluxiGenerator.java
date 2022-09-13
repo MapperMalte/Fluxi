@@ -1,4 +1,4 @@
-package config;
+package core;
 
 import core.FluxiBag;
 import core.FluxiTemplateTransformer;
@@ -10,6 +10,7 @@ import generators.phoenix.phoenix_channel_injection_generator;
 import generators.phoenix.phoenix_migration_injection_generator;
 import generators.phoenix.phoenix_model_injection_generator;
 import generators.phoenix.phoenix_repo_injection_generator;
+import generators.plain_generator;
 
 import java.util.ArrayList;
 
@@ -74,5 +75,24 @@ public class FluxiGenerator
                 "flutter",
                 "_repo.dart"
         );
+    }
+
+    public static void generateInitializer(FluxiBag fluxiBag)
+    {
+        FluxiTemplateTransformer.transformTemplate(
+                "flutter/flutter_project_initializer.fluxi",
+                new plain_generator(fluxiBag),
+                fluxiBag,
+                "flutter",
+                "_flutter_setup.sh"
+        );
+        FluxiTemplateTransformer.transformTemplate(
+                "phoenix/phoenix_project_initializer.fluxi",
+                new plain_generator(fluxiBag),
+                fluxiBag,
+                "phoenix",
+                "_phoenix_setup.sh"
+        );
+
     }
 }

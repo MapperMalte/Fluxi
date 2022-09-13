@@ -1,6 +1,20 @@
-fluxi make model MODEL
-fluxi change model MODEL remove ...
-fluxi change model MODEL add ...
+fluxi make MODEL
+fluxi change MODEL remove ...
+fluxi change MODEL add ...
 
+fluxi init project PROJECT_NAME phoenix, flutter, vuejs
+
+
+fluxi install
+
+fluxi serve as NODE_NAME
+
+* Erzeugt einen nginx, konfiguriert ihn, holt ein CERTBOT-Zertifikat
+
+fluxi deploy to NODE_NAME
+
+fluxi readytowork
+
+* Startet alle IDEs und Server fürs Entwickeln
 
 FluxiHints

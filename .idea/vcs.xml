@@ -2,5 +2,11 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/default_output/flutter/helloworld/hello_world_flutter" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/default_output/phoenix/helloworld/hello_world_phoenix" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/templates/flutter/generated_flutter_app" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/templates/flutter/generated_flutter_app/fluxiflut" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/templates/phoenix" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/templates/phoenix/fluxiphoenix" vcs="Git" />
   </component>
 </project>

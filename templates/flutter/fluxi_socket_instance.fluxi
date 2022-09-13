@@ -1,6 +1,6 @@
 import 'package:phoenix_socket/phoenix_socket.dart';
 
-typedef OnSocketInstanceOpened(PhoenixSocket phoenixSocket);
+typedef OnFluxiSocketInstanceOpened(PhoenixSocket phoenixSocket);
 
 class FluxiSocketInstance
 {
@@ -14,7 +14,7 @@ class FluxiSocketInstance
   {
     if ( _socketInstance == null )
     {
-      _socketInstance = new SocketInstance();
+      _socketInstance = new FluxiSocketInstance();
       _socketInstance!.connect();
     }
     return _socketInstance!;
@@ -43,7 +43,7 @@ class FluxiSocketInstance
   {
     if ( connected )
     {
-      onSocketInstanceOpened(phoenixSocket!);
+      onFluxiSocketInstanceOpened(phoenixSocket!);
     } else {
       awaitingClients.add(onSocketInstanceOpened);
     }
