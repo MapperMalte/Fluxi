@@ -18,6 +18,7 @@ public class FluxiGenerator
 {
     public static void generateFluxi(FluxiBag fluxiBag)
     {
+        fluxiBag.addUUID();
         String phoenixModel = FluxiTemplateTransformer.transformTemplate(
         "phoenix/phoenix_model_template.fluxi",
                 new phoenix_model_injection_generator(fluxiBag),
