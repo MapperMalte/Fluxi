@@ -1,20 +1,20 @@
 import 'package:phoenix_socket/phoenix_socket.dart';
 
-typedef OnFluxiSocketInstanceOpened(PhoenixSocket phoenixSocket);
+typedef On#NAMESocketInstanceOpened(PhoenixSocket phoenixSocket);
 
-class FluxiSocketInstance
+class #NAMESocketInstance
 {
-  static FluxiSocketInstance? _socketInstance;
+  static #NAMESocketInstance? _socketInstance;
   bool connecting = false;
   bool connected = false;
   PhoenixSocket? phoenixSocket;
-  List<OnSocketInstanceOpened> awaitingClients = [];
+  List<On#NAMESocketInstanceOpened> awaitingClients = [];
 
-  static FluxiSocketInstance getInstance()
+  static #NAMESocketInstance getInstance()
   {
     if ( _socketInstance == null )
     {
-      _socketInstance = new FluxiSocketInstance();
+      _socketInstance = new #NAMESocketInstance();
       _socketInstance!.connect();
     }
     return _socketInstance!;
@@ -39,13 +39,13 @@ class FluxiSocketInstance
     });
   }
 
-  void enqueue(OnSocketInstanceOpened onSocketInstanceOpened)
+  void enqueue(On#NAMESocketInstanceOpened on#NAMESocketInstanceOpened)
   {
     if ( connected )
     {
-      onFluxiSocketInstanceOpened(phoenixSocket!);
+      on#NAMESocketInstanceOpened(phoenixSocket!);
     } else {
-      awaitingClients.add(onSocketInstanceOpened);
+      awaitingClients.add(on#NAMESocketInstanceOpened);
     }
   }
 }

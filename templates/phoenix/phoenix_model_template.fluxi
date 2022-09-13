@@ -6,7 +6,6 @@ defmodule #ELIXIR_ROOT.#NAME do
 #FIELDS_LIST_FOR_JASON_ENCODER
   ]}
   schema "#NAME_SNAKE_CASE" do
-
 #FIELDS_LIST_FOR_SCHEMA
 
     timestamps()

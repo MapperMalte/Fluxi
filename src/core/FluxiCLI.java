@@ -1,5 +1,6 @@
 package core;
 
+import config.FluxiGenerator;
 import misc.CaseTransformer;
 
 import java.io.BufferedReader;

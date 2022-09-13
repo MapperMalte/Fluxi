@@ -14,20 +14,18 @@ class #NAMETeleFactory extends ChangeNotifier
   #NAMETeleFactory(this.uuid);
 
   void connect(On#NAMEConnected on#NAMEConnected) async {
-    FluxiSocketInstance.getInstance().enqueue((phoenixSocket) async {
+    #NAMESocketInstance.getInstance().enqueue((phoenixSocket) async {
       _channel = phoenixSocket.addChannel(
-          topic: "model:"+uuid,
+          topic: "#nAME:"+uuid,
           parameters: {}
       );
-     _channel?.join().onReply("ok", (p0) async {
+     _channel?.join().onReply("ok", (joinResponse) async {
        on#NAMEConnected(this);
-       _channel!.push("init", {
-                "uuid": uuid
-              }).onReply("ok", (p0) {
-                syncedInstance = p0.response['#nAME'];
+       _channel!.push("init", {}).onReply("ok", (initResponse) {
+                syncedInstance = initResponse.response['#nAME'];
                 notifyListeners();
                 await for (var message in _channel!.messages) {
-                     if (message.event == PhoenixChannelEvent.custom('model:updated') )
+                     if (message.event == PhoenixChannelEvent.custom('#nAME:updated') )
                      {
                         syncedInstance = #NAMEModel.fromMap(message.payload!['#nAME']);
                         notifyListeners();

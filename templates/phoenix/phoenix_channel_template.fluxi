@@ -4,11 +4,8 @@ defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
   alias #ELIXIR_ROOT.#NAMERepo
 
   @impl true
-  def join("connect:uuid", %{
-    "#nAME_uuid" => #nAME_uuid
-  }, socket) do
-
-    {:ok, socket |> assign( :#nAME_uuid, #nAME_uuid) }
+  def join("#nAME:"<>uuid, params, socket) do
+    {:ok, socket |> assign( :#nAME_uuid, uuid) }
   end
 
   @impl true
@@ -20,7 +17,19 @@ defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
   end
 
   @impl true
-  def handle_in("sync", payload, socket) do
+  def handle_in("sync", #nAME = %{
+#FIELDS_LIST_FOR_PATTERN_MATCHING_MAP
+  }, socket) do
+
+    case #NAMERepo.get_#nAME_by_uuid!(#nAME_uuid) do
+        existing_#nAME ->
+
+        nil ->
+            case #NameRepo.create_#nAME(#nAME) do
+              {:ok, chat_message_delivery} ->
+              {:error, %Ecto.Changeset{} = changeset} ->
+            end
+    end
     broadcast socket, "model:updated", payload
     {:noreply, socket}
   end

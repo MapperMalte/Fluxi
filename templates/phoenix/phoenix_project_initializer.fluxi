@@ -3,6 +3,9 @@ pg_ctl -D /usr/local/var/postgres start
 yes | mix phx.new #nAME_phoenix
 cd #nAME_phoenix
 mix ecto.create
+cd ..
+touch fluxiconf.fluxi
+echo "phoenix_project_location: $(pwd)" >> fluxiconf.fluxi
 git init
 git add .
 git commit -m "Hello from fluxi"

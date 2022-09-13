@@ -1,4 +1,4 @@
-package core;
+package config;
 
 import core.FluxiBag;
 import core.FluxiTemplateTransformer;
@@ -86,6 +86,13 @@ public class FluxiGenerator
                 fluxiBag,
                 "flutter",
                 "_flutter_setup.sh"
+        );
+        FluxiTemplateTransformer.transformTemplate(
+                "flutter/fluxi_socket_instance.fluxi",
+                new plain_generator(fluxiBag),
+                fluxiBag,
+                "flutter",
+                "_socket_instance.dart"
         );
         FluxiTemplateTransformer.transformTemplate(
                 "phoenix/phoenix_project_initializer.fluxi",

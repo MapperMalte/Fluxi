@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import {Socket} from "phoenix-socket";
-import shifts_module from '../components/planning_refactored/store/shifts.js'
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -33,10 +32,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    connectLiveSocket: ({commit,state}, newValue) => {
+    connect#NAMESocketInstance: ({commit,state}, newValue) => {
       let socket = new Socket("ws://localhost:4000/socket");
       socket.connect();
-      // Join in the links channel
       let channel = socket.channel("..:lobby", {});
       channel.join()
           .receive("ok", (resp)=> {
@@ -44,21 +42,9 @@ export default new Vuex.Store({
             state.arbeitszeiten = [];
           })
           .receive("error", resp => { console.log("NewLink Unable to join", resp) });
-      channel.on('receive_update', payload => {
-        state.arbeitszeiten.push(payload);
-        //this.links.push(payload.link)
-      });
-    },
+      channel.on('sync', payload => {
 
-    loadOrders: ({commit,state}, newValue) => {
-      axios.get(state.append_token(state.base_route+"/orders/all/")).then((response) => state.orders = response.data);
-    },
-    set_token: ({commit,state}, newValue) => {
-      state.token = newValue.token;
-      state.scope = newValue.scopes;
-    },
-    loadContracts: ({commit,state}, newValue) => {
-      axios.get(state.append_token(state.base_route+"/contracts/all/")).then((response) => state.contracts = response.data);
+      });
     },
   },
   modules: {

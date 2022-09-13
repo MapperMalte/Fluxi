@@ -9,18 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-class FluxiReflection
-{
-    Method method;
-    String paramName;
-
-    FluxiReflection(Method method, String paramName)
-    {
-        this.method = method;
-        this.paramName = paramName;
-    }
-}
-
 public class FluxiTemplateTransformer
 {
     static String getProjectFileRoot()
@@ -30,18 +18,18 @@ public class FluxiTemplateTransformer
 
     // Connect Annotation to method
     public static String transformTemplate(
-    String templateName,
-    Object paramInjecter,
-    FluxiBag fluxiBag,
-    String folder,
-    String ending
+        String templateName,
+        Object paramInjecter,
+        FluxiBag fluxiBag,
+        String folder,
+        String ending
     )
     {
         File template = new File(getProjectFileRoot()+"/templates/"+templateName);
         File output = new File(getProjectFileRoot()+"/default_output/" + folder +"/"+
-                fluxiBag.name.toLowerCase()+"/"+fluxiBag.name.toLowerCase()+ending);
+                CaseTransformer.toSnakeCase(fluxiBag.name)+"/"+CaseTransformer.toSnakeCase(fluxiBag.name)+ending);
         new File(getProjectFileRoot()+"/default_output/" + folder +"/"+
-                fluxiBag.name.toLowerCase()+"/").mkdirs();
+                CaseTransformer.toSnakeCase(fluxiBag.name)+"/").mkdirs();
 
         System.out.println("OUTPUT: "+output.getAbsolutePath());
         Annotation[] annotations = paramInjecter.getClass().getAnnotations();

@@ -1,8 +1,11 @@
 package generators.phoenix;
 
 import annotations.InjectIntoParam;
+import annotations.MovedTo;
+import annotations.TargetPathGenerator;
 import core.FluxiBag;
 
+@MovedTo(path = "#ELIXIR_ROOT/priv/repo/migrations")
 public class phoenix_migration_injection_generator
 {
     FluxiBag fluxiBag;
@@ -31,5 +34,4 @@ public class phoenix_migration_injection_generator
         }
         return stringBuilder.toString();
     }
-
 }

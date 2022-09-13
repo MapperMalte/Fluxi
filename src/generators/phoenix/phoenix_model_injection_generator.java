@@ -1,8 +1,11 @@
 package generators.phoenix;
 
 import annotations.InjectIntoParam;
+import annotations.MovedTo;
+import annotations.TargetPathGenerator;
 import core.FluxiBag;
 
+@MovedTo(path = "#ELIXIR_ROOT/lib/fluxi_generated/#nAME")
 public class phoenix_model_injection_generator
 {
     FluxiBag fluxiBag;
@@ -18,8 +21,6 @@ public class phoenix_model_injection_generator
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = 0; i < fluxiBag.params.length; i++ )
         {
-            //field :encrypted, :boolean
-
             stringBuilder.append("    field :");
             stringBuilder.append(fluxiBag.params[i].name);
             stringBuilder.append(", :");

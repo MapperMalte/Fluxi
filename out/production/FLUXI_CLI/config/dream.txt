@@ -4,6 +4,7 @@ fluxi change MODEL add ...
 
 fluxi init project PROJECT_NAME phoenix, flutter, vuejs
 
+fluxi MODEL repo yolo
 
 fluxi install
 
