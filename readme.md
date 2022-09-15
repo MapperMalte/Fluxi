@@ -1,6 +1,11 @@
 Fluxi assumes you want to make a Flutter-App and possibly a VueJS-App with a Phoenix-Backend.
 
-It further assumes you want to work with provider, phoenix_socket, sqflite and timex and that each of your models should have a globally unique UUID.
+It further assumes 
+* you want to work with provider, phoenix_socket, sqflite and timex 
+* each of your models should have a globally unique UUID.
+
+To avoid locale issues and because sqflite has no dative datetimes, all dates are stored
+as milisecondsSinceEpoch in databases.
 
 The code-generators of phoenix are very handy. Fluxi is supposed to extend the code-generation to Flutter, too.
 

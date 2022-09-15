@@ -1,6 +1,9 @@
-package core;
+package cli;
 
 import config.FluxiGenerator;
+import core.FluxiBag;
+import core.FluxiParam;
+import core.FluxiType;
 import misc.CaseTransformer;
 
 import java.io.BufferedReader;

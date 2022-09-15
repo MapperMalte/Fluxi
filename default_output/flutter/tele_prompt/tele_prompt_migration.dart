@@ -3,14 +3,14 @@ class Database
     void execute(String s) {}
 }
 
-class TelePromptListMigration
+class TelePromptMigration
 {
     void createDatabase(Database db)
     {
-        db.execute("CREATE TABLE TelePromptList"
-              +"tele_prompt_list_uuid TEXT, "
+        db.execute("CREATE TABLE TelePrompt"
+              +"tele_prompt_uuid TEXT, "
               +"name TEXT, "
-              +"owner TEXT"
+              +"age INTEGER"
             ")"
         );
     }

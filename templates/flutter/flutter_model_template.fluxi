@@ -2,6 +2,8 @@ class #NAMEModel
 {
   static const String TABLE_NAME = '#NAME';
 
+#FLUTTER_CLASS_FIELD_NAMES_CONSTANTS
+
 #FLUTTER_CLASS_FIELDS_LIST
 
   #NAMEModel.fromMap(Map<dynamic, dynamic> map)

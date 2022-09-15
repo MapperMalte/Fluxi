@@ -20,17 +20,20 @@ defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
   def handle_in("sync", #nAME = %{
 #FIELDS_LIST_FOR_PATTERN_MATCHING_MAP
   }, socket) do
-
-    case #NAMERepo.get_#nAME_by_uuid!(#nAME_uuid) do
-        existing_#nAME ->
-
-        nil ->
-            case #NameRepo.create_#nAME(#nAME) do
-              {:ok, chat_message_delivery} ->
+    if ( #NAMERepo.has_#nAME_with_uuid! ) do
+        existing_#nAME = #NAMERepo.get_#nAME_by_uuid!(#nAME_uuid)
+            #NAMERepo.update_#nAME_by_uuid(
+                existing_#nAME,
+                #nAME
+            )
+        broadcast socket, "model:updated", #nAME
+    else
+        case #NAMERepo.create_#nAME(#nAME) do
+              {:ok, newly_created_#nAME} ->
+                broadcast socket, "model:created", newly_created_#nAME
               {:error, %Ecto.Changeset{} = changeset} ->
-            end
+        end
     end
-    broadcast socket, "model:updated", payload
     {:noreply, socket}
   end
 
