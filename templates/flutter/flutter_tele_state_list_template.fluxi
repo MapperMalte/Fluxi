@@ -5,29 +5,32 @@ import 'package:phoenix_socket/phoenix_socket.dart';
 typedef On#NAMEConnected(#NAMEModel fetchedOrCreatedModel);
 typedef On#NAMEUpdated(#NAMEModel updatedModel);
 
-class #NAMETeleState extends ChangeNotifier
+class #NAMETeleStateList extends ChangeNotifier
 {
   PhoenixChannel? _channel;
-  #NAMEModel syncedInstance;
-  String uuid;
+  final List<#NAMEModel> syncedInstances = [];
+  final Map<String,List<dynamic>> índexedInstancesByUUID = {};
 
-  #NAMETeleState(this.uuid);
+  #NAMETeleFactory(this.uuid);
 
   void connect(On#NAMEConnected on#NAMEConnected) async {
     #NAMESocketInstance.getInstance().enqueue((phoenixSocket) async {
       _channel = phoenixSocket.addChannel(
-          topic: "#nAME:"+uuid,
+          topic: "#nAME:lobby",
           parameters: {}
       );
      _channel?.join().onReply("ok", (joinResponse) async {
        on#NAMEConnected(this);
-       _channel!.push("init", {}).onReply("ok", (initResponse) {
-                syncedInstance = initResponse.response['#nAME'];
+       _channel!.push("list", {}).onReply("ok", (initResponse) {
+                syncedInstances = initResponse.response['#nAME'];
                 notifyListeners();
                 await for (var message in _channel!.messages) {
                      if (message.event == PhoenixChannelEvent.custom('#nAME:updated') )
                      {
-                        syncedInstance = #NAMEModel.fromMap(message.payload!['#nAME']);
+                        updatedInstance = #NAMEModel.fromMap(message.payload!['#nAME']);
+                        List<dynamic> indexedInstance = índexedInstancesByUUID[updatedInstance.#nAME_uuid]
+                        syncedInstances[indexedInstance[0]] = updatedInstance;
+                        índexedInstancesByUUID[updatedInstance.#nAME_uuid] = updatedInstance;
                         notifyListeners();
                      }
                 }

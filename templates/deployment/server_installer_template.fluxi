@@ -1,0 +1,37 @@
+@System: 20.04 LTS
+
+sudo apt update && sudo apt upgrade
+
+wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb
+sudo dpkg -i erlang-solutions_2.0_all.deb
+wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
+sudo apt-key add erlang_solutions.asc
+sudo apt-get update
+sudo apt-get install erlang
+echo "$(tput setaf 2)Elixir und Erlang installiert!$(tput sgr0)"
+
+sudo apt install postgresql postgresql-contrib
+su - postgres
+sudo -i -u postgres
+create user user_name with encrypted password 'mypassword';
+grant all privileges on database sample_db to user_name;
+echo "$(tput setaf 2)postgres installiert!$(tput sgr0)"
+
+sudo apt install nginx
+cp #NGINX_CONFIG_FILE /etc/nginx/sites-enabled
+echo "$(tput setaf 2)nginx installiert!$(tput sgr0)"
+
+apt-get install software-properties-common python-software-properties
+add-apt-repository ppa:certbot/certbot
+apt-get update
+apt-get install python-certbot-apache
+sudo service nginx restart
+echo "$(tput setaf 2)Certbot-Challenge für HTTPS ausgeführt!$(tput sgr0)"
+
+crontab -e
+0 0 1 * * /usr/bin/letsencrypt renew >> /var/log/letsencrypt-renew.log
+service cron restart
+echo "$(tput setaf 2)Certbot-Crontab eingerichtet!$(tput sgr0)"
+
+sudo apt install nodejs npm
+echo "$(tput setaf 2)NodeJS installiert!$(tput sgr0)"

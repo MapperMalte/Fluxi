@@ -25,6 +25,16 @@ class #NAMESocketInstance
     if ( connecting || connected ) return;
     connecting = true;
 
+    phoenixSocket = PhoenixSocket(
+        'wss://' +  TeleRepo.TELE_URL   +'/socket/websocket',
+        socketOptions: PhoenixSocketOptions (
+                params: {
+                  "token": Myself.token
+                },
+                timeout: Duration(seconds: 25)
+            )
+    );
+
     phoenixSocket!.closeStream.listen((event) {
       connected = false;
     });

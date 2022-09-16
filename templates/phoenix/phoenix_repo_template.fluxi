@@ -13,6 +13,10 @@ defmodule #ELIXIR_ROOT.#NAMERepo do
     Repo.one(from u in #NAME, where: u.#nAME_uuid == ^#nAME_uuid)
   end
 
+  def list_each_#nAME!() do
+    Repo.one(from u in #NAME)
+  end
+
   def has_#nAME_with_uuid!(#nAME_uuid) do
     Repo.one(from u in #NAME, where: u.#nAME_uuid == ^#nAME_uuid)
   end

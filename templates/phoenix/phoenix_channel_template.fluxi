@@ -4,6 +4,12 @@ defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
   alias #ELIXIR_ROOT.#NAMERepo
 
   @impl true
+  def join("#nAME:lobby", params, socket) do
+    #NAMERepo.list_each_#nAME!()
+    {:ok, socket |> assign( :#nAME_uuid, uuid) }
+  end
+
+  @impl true
   def join("#nAME:"<>uuid, params, socket) do
     {:ok, socket |> assign( :#nAME_uuid, uuid) }
   end
@@ -20,7 +26,7 @@ defmodule #ELIXIR_ROOTWeb.#NAMEChannel do
   def handle_in("sync", #nAME = %{
 #FIELDS_LIST_FOR_PATTERN_MATCHING_MAP
   }, socket) do
-    if ( #NAMERepo.has_#nAME_with_uuid! ) do
+    if ( #NAMERepo.has_#nAME_with_uuid!(#nAME_uuid) ) do
         existing_#nAME = #NAMERepo.get_#nAME_by_uuid!(#nAME_uuid)
             #NAMERepo.update_#nAME_by_uuid(
                 existing_#nAME,

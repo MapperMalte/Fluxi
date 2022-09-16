@@ -1,0 +1,9 @@
+
+
+
+Template:
+* Enthält Dateiort
+* Enthält Injecter
+
+TemplateTransformer:
+* Erhält FluxiBag und Template

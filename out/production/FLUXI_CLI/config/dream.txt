@@ -12,10 +12,28 @@ fluxi serve as NODE_NAME
 
 * Erzeugt einen nginx, konfiguriert ihn, holt ein CERTBOT-Zertifikat
 
-fluxi deploy to NODE_NAME
+fluxi deploy PROJECT_NAME to NODE_NAME
 
 fluxi readytowork
 
 * Startet alle IDEs und Server fürs Entwickeln
 
 FluxiHints
+
+fluxi make auth
+
+
+fluxi init
+
+Projektsetup:
+1. Fragt nach Ort
+2. Fragt nach Stack
+3. Generate auth?
+
+Dann brauche ich noch:
+
+TelePhotoAsset
+TeleVideoAsset
+TeleSoundAsset
+TeleAsset
+webRTCFlux: Ein webRTC-Stream
