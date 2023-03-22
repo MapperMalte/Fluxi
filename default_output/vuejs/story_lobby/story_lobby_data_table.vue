@@ -22,7 +22,7 @@
 
                 <template v-slot:item.actions="{item }">
                     <v-dialog
-                v-model="editing_#nAME"
+                v-model="editing_story_lobby"
                 scrollable
                 max-width="600px"
                 >
@@ -121,7 +121,7 @@
         </div>
         <div style="position: fixed;bottom: 20px; right: 15px;">
             <v-dialog
-                v-model="creating_#nAME"
+                v-model="creating_story_lobby"
                 scrollable
                 max-width="600px"
                 >
@@ -144,7 +144,30 @@
                     <v-card-title>Veranstaltung erstellen</v-card-title>
                     <v-form v-model="valid">
                         <v-container>
-#FIELDS_LIST_FOR_CREATE
+                    { text: 'Story_lobby_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>story_lobby_uuid' } , 
+                    { text: 'Host_user_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>host_user_uuid' } , 
+                    { text: 'Title<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>title' } , 
+                    { text: 'Public<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>public' } 
                         </v-container>
                     </v-form>
                     <v-btn>Erstellen</v-btn>
@@ -172,12 +195,12 @@
 
 <script>
     export default {
-        name: "#NAMEDataTable",
+        name: "Story_lobbyDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list () {
+            story_lobby_list () {
                 return [
                 {
                     "title": "Bla",
@@ -201,12 +224,15 @@
         },
         data(){
             return {
-                creating_#nAME: false,
-                editing_#nAME: false,
-                deleting_#nAME: false,
+                creating_story_lobby: false,
+                editing_story_lobby: false,
+                deleting_story_lobby: false,
 
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Story_lobby_uuid', value: 'story_lobby_uuid' } , 
+                    { text: 'Host_user_uuid', value: 'host_user_uuid' } , 
+                    { text: 'Title', value: 'title' } , 
+                    { text: 'Public', value: 'public' } 
                 ],
             };
         }
@@ -237,25 +263,25 @@
     <v-card>
         <v-data-table
         :headers="headers"
-        :items="#nAME_list"
+        :items="story_lobby_list"
         :footer-props="{'items-per-page-options':[30,60,90]}"
         item-key="name"
         class="elevation-1">
-            <template v-slot:body="{ #nAME_list, headers }">
+            <template v-slot:body="{ story_lobby_list, headers }">
                 <tbody>
-                    <tr v-for="(#nAME,idx,k) in #nAME_list" :key="idx">
+                    <tr v-for="(story_lobby,idx,k) in story_lobby_list" :key="idx">
                         <td v-for="(header,key) in headers" :key="key">
                             <v-edit-dialog
-                              :return-value.sync="#nAME[header.value]"
+                              :return-value.sync="story_lobby[header.value]"
                               @save="save"
                               @cancel="cancel"
                               @open="open"
                               @close="close"
                               large
-                            > {{#nAME[header.value]}}
+                            > {{story_lobby[header.value]}}
                               <template v-slot:input>
                                 <v-text-field
-                                  v-model="#nAME[header.value]"
+                                  v-model="story_lobby[header.value]"
                                   label="Edit"
                                   single-line
                                 ></v-text-field>
@@ -272,13 +298,13 @@
 <script>
     import { Socket} from 'phoenix-socket'
     export default {
-        name: "#NAMEDataTable",
+        name: "Story_lobbyDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list : (){
-                return $store.state.#nAME_list;
+            story_lobby_list : (){
+                return $store.state.story_lobby_list;
             }
         },
         mounted() {
@@ -287,7 +313,10 @@
         data(){
             return {
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Story_lobby_uuid', value: 'story_lobby_uuid' } , 
+                    { text: 'Host_user_uuid', value: 'host_user_uuid' } , 
+                    { text: 'Title', value: 'title' } , 
+                    { text: 'Public', value: 'public' } 
                 ],
             };
         }

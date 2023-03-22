@@ -10,6 +10,7 @@ import generators.phoenix.phoenix_channel_injection_generator;
 import generators.phoenix.phoenix_migration_injection_generator;
 import generators.phoenix.phoenix_model_injection_generator;
 import generators.phoenix.phoenix_repo_injection_generator;
+import generators.vuejs.vuejs_v_data_table_injection_generator;
 import generators.plain_generator;
 
 import java.util.ArrayList;
@@ -76,6 +77,21 @@ public class FluxiGenerator
                 "flutter",
                 "_repo.dart"
         );
+        // VueJS
+        FluxiTemplateTransformer.transformTemplate(
+                "vuejs/vue_store_template.fluxi",
+                new flutter_model_repo_injection_generator(fluxiBag),
+                fluxiBag,
+                "vuejs",
+                "_store.js"
+        );
+        FluxiTemplateTransformer.transformTemplate(
+                "vuejs/vue_v_data_table_template.fluxi",
+                new vuejs_v_data_table_injection_generator(fluxiBag),
+                fluxiBag,
+                "vuejs",
+                "_data_table.vue"
+        );
     }
 
     public static void generateInitializer(FluxiBag fluxiBag)
@@ -101,6 +117,5 @@ public class FluxiGenerator
                 "phoenix",
                 "_phoenix_setup.sh"
         );
-
     }
 }

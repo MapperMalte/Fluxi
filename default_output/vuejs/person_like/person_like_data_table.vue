@@ -22,7 +22,7 @@
 
                 <template v-slot:item.actions="{item }">
                     <v-dialog
-                v-model="editing_#nAME"
+                v-model="editing_person_like"
                 scrollable
                 max-width="600px"
                 >
@@ -121,7 +121,7 @@
         </div>
         <div style="position: fixed;bottom: 20px; right: 15px;">
             <v-dialog
-                v-model="creating_#nAME"
+                v-model="creating_person_like"
                 scrollable
                 max-width="600px"
                 >
@@ -144,7 +144,24 @@
                     <v-card-title>Veranstaltung erstellen</v-card-title>
                     <v-form v-model="valid">
                         <v-container>
-#FIELDS_LIST_FOR_CREATE
+                    { text: 'Person_like_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>person_like_uuid' } , 
+                    { text: 'Liked_user_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>liked_user_uuid' } , 
+                    { text: 'Liking_user_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>liking_user_uuid' } 
                         </v-container>
                     </v-form>
                     <v-btn>Erstellen</v-btn>
@@ -172,12 +189,12 @@
 
 <script>
     export default {
-        name: "#NAMEDataTable",
+        name: "PersonLikeDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list () {
+            person_like_list () {
                 return [
                 {
                     "title": "Bla",
@@ -201,12 +218,14 @@
         },
         data(){
             return {
-                creating_#nAME: false,
-                editing_#nAME: false,
-                deleting_#nAME: false,
+                creating_person_like: false,
+                editing_person_like: false,
+                deleting_person_like: false,
 
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Person_like_uuid', value: 'person_like_uuid' } , 
+                    { text: 'Liked_user_uuid', value: 'liked_user_uuid' } , 
+                    { text: 'Liking_user_uuid', value: 'liking_user_uuid' } 
                 ],
             };
         }
@@ -237,25 +256,25 @@
     <v-card>
         <v-data-table
         :headers="headers"
-        :items="#nAME_list"
+        :items="person_like_list"
         :footer-props="{'items-per-page-options':[30,60,90]}"
         item-key="name"
         class="elevation-1">
-            <template v-slot:body="{ #nAME_list, headers }">
+            <template v-slot:body="{ person_like_list, headers }">
                 <tbody>
-                    <tr v-for="(#nAME,idx,k) in #nAME_list" :key="idx">
+                    <tr v-for="(person_like,idx,k) in person_like_list" :key="idx">
                         <td v-for="(header,key) in headers" :key="key">
                             <v-edit-dialog
-                              :return-value.sync="#nAME[header.value]"
+                              :return-value.sync="person_like[header.value]"
                               @save="save"
                               @cancel="cancel"
                               @open="open"
                               @close="close"
                               large
-                            > {{#nAME[header.value]}}
+                            > {{person_like[header.value]}}
                               <template v-slot:input>
                                 <v-text-field
-                                  v-model="#nAME[header.value]"
+                                  v-model="person_like[header.value]"
                                   label="Edit"
                                   single-line
                                 ></v-text-field>
@@ -272,13 +291,13 @@
 <script>
     import { Socket} from 'phoenix-socket'
     export default {
-        name: "#NAMEDataTable",
+        name: "PersonLikeDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list : (){
-                return $store.state.#nAME_list;
+            person_like_list : (){
+                return $store.state.person_like_list;
             }
         },
         mounted() {
@@ -287,7 +306,9 @@
         data(){
             return {
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Person_like_uuid', value: 'person_like_uuid' } , 
+                    { text: 'Liked_user_uuid', value: 'liked_user_uuid' } , 
+                    { text: 'Liking_user_uuid', value: 'liking_user_uuid' } 
                 ],
             };
         }

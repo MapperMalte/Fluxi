@@ -8,11 +8,13 @@ wget https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
 sudo apt-key add erlang_solutions.asc
 sudo apt-get update
 sudo apt-get install erlang
+sudo apt-get install elixir
 echo "$(tput setaf 2)Elixir und Erlang installiert!$(tput sgr0)"
 
 sudo apt install postgresql postgresql-contrib
 su - postgres
 sudo -i -u postgres
+psql
 create user user_name with encrypted password 'mypassword';
 grant all privileges on database sample_db to user_name;
 echo "$(tput setaf 2)postgres installiert!$(tput sgr0)"
@@ -20,6 +22,14 @@ echo "$(tput setaf 2)postgres installiert!$(tput sgr0)"
 sudo apt install nginx
 cp #NGINX_CONFIG_FILE /etc/nginx/sites-enabled
 echo "$(tput setaf 2)nginx installiert!$(tput sgr0)"
+
+
+
+sudo apt-get install certbot 
+
+sudo apt install git-all
+echo "$(tput setaf 2)GIT installiert!$(tput sgr0)"
+
 
 apt-get install software-properties-common python-software-properties
 add-apt-repository ppa:certbot/certbot
@@ -35,3 +45,5 @@ echo "$(tput setaf 2)Certbot-Crontab eingerichtet!$(tput sgr0)"
 
 sudo apt install nodejs npm
 echo "$(tput setaf 2)NodeJS installiert!$(tput sgr0)"
+
+sudo apt-get install build-essential

@@ -22,7 +22,7 @@
 
                 <template v-slot:item.actions="{item }">
                     <v-dialog
-                v-model="editing_#nAME"
+                v-model="editing_connect_notification"
                 scrollable
                 max-width="600px"
                 >
@@ -121,7 +121,7 @@
         </div>
         <div style="position: fixed;bottom: 20px; right: 15px;">
             <v-dialog
-                v-model="creating_#nAME"
+                v-model="creating_connect_notification"
                 scrollable
                 max-width="600px"
                 >
@@ -144,7 +144,72 @@
                     <v-card-title>Veranstaltung erstellen</v-card-title>
                     <v-form v-model="valid">
                         <v-container>
-#FIELDS_LIST_FOR_CREATE
+                    { text: 'Connect_notification_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>connect_notification_uuid' } , 
+                    { text: 'Public_key<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>public_key' } , 
+                    { text: 'Notified_user_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>notified_user_uuid' } , 
+                    { text: 'Username<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>username' } , 
+                    { text: 'Vorname<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>vorname' } , 
+                    { text: 'Nachname<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>nachname' } , 
+                    { text: 'Photo<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>photo' } , 
+                    { text: 'Thumbnail<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>thumbnail' } , 
+                    { text: 'Description<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>description' } , 
+                    { text: 'User_id<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>user_id' } , 
+                    { text: 'User_uuid<v-text-field
+                                        v-model="lastname"
+                                        :rules="nameRules"
+                                        label="Ticketpreis"
+                                        required
+                                ></v-text-field>user_uuid' } 
                         </v-container>
                     </v-form>
                     <v-btn>Erstellen</v-btn>
@@ -172,12 +237,12 @@
 
 <script>
     export default {
-        name: "#NAMEDataTable",
+        name: "ConnectNotificationDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list () {
+            connect_notification_list () {
                 return [
                 {
                     "title": "Bla",
@@ -201,12 +266,22 @@
         },
         data(){
             return {
-                creating_#nAME: false,
-                editing_#nAME: false,
-                deleting_#nAME: false,
+                creating_connect_notification: false,
+                editing_connect_notification: false,
+                deleting_connect_notification: false,
 
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Connect_notification_uuid', value: 'connect_notification_uuid' } , 
+                    { text: 'Public_key', value: 'public_key' } , 
+                    { text: 'Notified_user_uuid', value: 'notified_user_uuid' } , 
+                    { text: 'Username', value: 'username' } , 
+                    { text: 'Vorname', value: 'vorname' } , 
+                    { text: 'Nachname', value: 'nachname' } , 
+                    { text: 'Photo', value: 'photo' } , 
+                    { text: 'Thumbnail', value: 'thumbnail' } , 
+                    { text: 'Description', value: 'description' } , 
+                    { text: 'User_id', value: 'user_id' } , 
+                    { text: 'User_uuid', value: 'user_uuid' } 
                 ],
             };
         }
@@ -237,25 +312,25 @@
     <v-card>
         <v-data-table
         :headers="headers"
-        :items="#nAME_list"
+        :items="connect_notification_list"
         :footer-props="{'items-per-page-options':[30,60,90]}"
         item-key="name"
         class="elevation-1">
-            <template v-slot:body="{ #nAME_list, headers }">
+            <template v-slot:body="{ connect_notification_list, headers }">
                 <tbody>
-                    <tr v-for="(#nAME,idx,k) in #nAME_list" :key="idx">
+                    <tr v-for="(connect_notification,idx,k) in connect_notification_list" :key="idx">
                         <td v-for="(header,key) in headers" :key="key">
                             <v-edit-dialog
-                              :return-value.sync="#nAME[header.value]"
+                              :return-value.sync="connect_notification[header.value]"
                               @save="save"
                               @cancel="cancel"
                               @open="open"
                               @close="close"
                               large
-                            > {{#nAME[header.value]}}
+                            > {{connect_notification[header.value]}}
                               <template v-slot:input>
                                 <v-text-field
-                                  v-model="#nAME[header.value]"
+                                  v-model="connect_notification[header.value]"
                                   label="Edit"
                                   single-line
                                 ></v-text-field>
@@ -272,13 +347,13 @@
 <script>
     import { Socket} from 'phoenix-socket'
     export default {
-        name: "#NAMEDataTable",
+        name: "ConnectNotificationDataTable",
         components: {
 
         },
         computed : {
-            #nAME_list : (){
-                return $store.state.#nAME_list;
+            connect_notification_list : (){
+                return $store.state.connect_notification_list;
             }
         },
         mounted() {
@@ -287,7 +362,17 @@
         data(){
             return {
                 headers: [
-#HEADERS_FOR_V_DATA_TABLE
+                    { text: 'Connect_notification_uuid', value: 'connect_notification_uuid' } , 
+                    { text: 'Public_key', value: 'public_key' } , 
+                    { text: 'Notified_user_uuid', value: 'notified_user_uuid' } , 
+                    { text: 'Username', value: 'username' } , 
+                    { text: 'Vorname', value: 'vorname' } , 
+                    { text: 'Nachname', value: 'nachname' } , 
+                    { text: 'Photo', value: 'photo' } , 
+                    { text: 'Thumbnail', value: 'thumbnail' } , 
+                    { text: 'Description', value: 'description' } , 
+                    { text: 'User_id', value: 'user_id' } , 
+                    { text: 'User_uuid', value: 'user_uuid' } 
                 ],
             };
         }

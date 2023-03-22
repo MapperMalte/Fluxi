@@ -1,6 +1,6 @@
 package core;
 
-public class FluxiTemplateDestinationPathBuilder
+public class FluxiTemplateDestinationMover
 {
     public static String paramTransformer()
     {

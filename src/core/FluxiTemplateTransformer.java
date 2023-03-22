@@ -32,6 +32,7 @@ public class FluxiTemplateTransformer
                 CaseTransformer.toSnakeCase(fluxiBag.name)+"/").mkdirs();
 
         System.out.println("OUTPUT: "+output.getAbsolutePath());
+
         Annotation[] annotations = paramInjecter.getClass().getAnnotations();
         ArrayList<FluxiReflection> fluxiInjectors = new ArrayList<>();
         Method[] methods = paramInjecter.getClass().getDeclaredMethods();

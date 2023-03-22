@@ -9,8 +9,8 @@ public class FluxiBag
     public FluxiParam[] params;
     public String name;
     public String elixir_root = "FinalLocallity";
-    String elixir_project_root;
-    String phoenix_project_root;
+    String elixir_project_root = "/Users/m.nolden/teleprompter_app/teleprompter_app/";
+    String phoenix_project_root = "/Users/m.nolden/teleprompter_app/teleprompter_app/";
 
     public void addUUID() {
         FluxiParam[] newParams = new FluxiParam[params.length+1];

@@ -1,0 +1,84 @@
+
+bank_account {
+    receiver_name:string
+    IBAN:string
+    BIC:string
+    currency_literal:string
+    corporate:boolean
+}
+
+
+event_location {
+    name:string 
+    description:string
+    website_url:string
+    people_capacity:integer
+    bank_account_uuid:string
+    name:string
+    location:geolocation
+}
+
+artist {
+    fluxi make model 
+    artist_name:string
+    description:string
+    bank_account_uuid:bank_account
+}
+
+make models
+
+
+
+
+fluxi make model golden_qr_code
+artist_uuid:string
+
+fluxi make model silver_qr_code
+arist_uuid:string
+
+fluxi make model artist_event
+artist_uuid:string
+begin_entry:datetime
+begin:datetime
+end:datetime
+
+fluxi make model event_ticket_type
+artist_event_uuid:string
+price:integer
+currency_literal:string
+title:string
+description:string
+sales_start_date:datetime
+sales_end_date:datetime
+
+fluxi make model artist_tour
+artist_uuid:string
+name:string
+
+fluxi make model artist_tour_event
+artist_tour_uuid:string
+event_location_artist_deal_uuid:string
+published:boolean
+
+fluxi make model event_location_artist_deal
+event_location_uuid:string
+artist_event_uuid:string
+artist_percentage:float
+
+fluxi make model event_ticket
+user_uuid:string
+event_ticket_type_uuid:string
+used_at:datetime
+bought_with_premium_version:boolean
+payment_uuid:string
+
+event_ticket_bill
+user_uuid:string
+event_ticket_uuid:string
+
+fluxi make model payment
+from_bank_account_uuid:string
+to_bank_account_uuid:string
+amount:integer
+currency_literal:string
+reason:string
