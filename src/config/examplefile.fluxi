@@ -1,0 +1,93 @@
+config {
+
+}
+
+StateMachine seen_state {
+    states {
+        not_received_on_server as A
+        received_on_server as B
+        received_by_target as C
+        seen_by_target as D
+    }
+
+    events {
+        received_on_server as RS
+        received_by_target as RT
+        seen_by_target as ST
+    }
+    
+    transition {
+        A {
+            RS => B
+            RT => C
+            ST => D
+        }
+
+        B {
+            RT => C
+            ST => D
+        }
+
+        C {
+            ST => D
+        }
+
+        D {
+            
+        }
+    }
+}
+
+stateful chat_message {
+	statemachine<seen_state> seen_state
+	state<string> content
+
+	mutation sent_to_target {
+		message_sender_uuid:string
+		message_recipient_uuid:string
+	}
+
+	mutation received_by_target {
+		message_sender_uuid:string
+		message_recipient_uuid:string
+	}
+}
+
+stateful User {
+    
+}
+
+stateful Chat {
+    stateful List<User> participants {
+
+    }
+	stateful List<ChatMessage> {
+        sent_at:datetime
+        message_sender_uuid:string
+		content:State<string> {
+			mutation update_content {
+				content:string
+                token:ownership
+			}
+		}
+		seen_state:StateMachine<seen_state> {
+			mutation set_delivered_to_target_user {
+				message_sender_uuid:string
+		        message_recipient_uuid:string
+			} throws event {
+                received_by_target
+            }
+
+			mutation set_seen_by_target_user {
+                message_sender_uuid:string
+		        message_recipient_uuid:string
+			} throws event {
+                seen_by_target
+            }
+		}
+	}
+}
+
+stateful Story {
+
+}

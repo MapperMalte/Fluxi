@@ -20,6 +20,7 @@ public class phoenix_migration_injection_generator
 
         return  sb.toString();
     }
+    
     @InjectIntoParam(name = "FIELDS_LIST_FOR_TABLE_CREATION")
     public String generateFieldsListForTableCreation()
     {

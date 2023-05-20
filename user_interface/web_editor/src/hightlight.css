@@ -1,0 +1,13 @@
+
+.keyword {
+    color: #7400bc;
+    font-weight: 500;
+}
+
+.type {
+    color: #1904ff;
+}
+
+.method_name {
+    color: #ff9f04;
+}

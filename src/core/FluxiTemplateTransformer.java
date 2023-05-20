@@ -81,7 +81,6 @@ public class FluxiTemplateTransformer
             }
             bufferedWriter.flush();
             bufferedWriter.close();
-            bufferedReader.close();
 
             if ( ending.endsWith(".sh") )
             {
